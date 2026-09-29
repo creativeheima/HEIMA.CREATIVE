@@ -13,8 +13,8 @@ export default defineConfig({
   name: "heima-creative",
   title: "HEIMA.CREATIVE CMS",
   basePath: "/studio",
-  projectId,
-  dataset,
+  projectId: projectId || "placeholder",
+  dataset: dataset || "production",
   schema: {
     types: schemaTypes,
     // Singleton tidak bisa dibuat ulang dari menu "Create"
