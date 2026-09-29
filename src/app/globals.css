@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   HEIMA.CREATIVE — design tokens (lihat DESIGN-SYSTEM.md)
+   Semua warna diambil dari logo resmi.
+------------------------------------------------------------------ */
+@theme {
+  /* Brand — dari logo */
+  --color-navy: #213c6d; /* Primary: kepala kuda */
+  --color-royal: #295092; /* Secondary: gradasi surai & jalur data */
+  --color-signal: #eb772c; /* Accent: jalur sirkuit oranye */
+  --color-paper: #ffffff; /* Background: latar logo */
+  --color-ink: #0f1b31; /* Text: shade terdalam navy */
+
+  /* Shade navy (turunan primary, bukan warna baru) */
+  --color-deep: #111f3b;
+  --color-abyss: #0a1326;
+
+  /* Netral */
+  --color-mist: #f4f6f9;
+  --color-fog: #e6e9ef;
+  --color-steel: #6b7385;
+
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@theme inline {
+  --font-display: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+@utility container-x {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3rem);
+}
+
+@utility section-y {
+  padding-block: clamp(6rem, 14vw, 13rem);
+}
+
+@utility meta {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@utility display-xl {
+  font-family: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(3.25rem, 11vw, 11.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+
+@utility display-l {
+  font-family: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7.2vw, 7.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+@utility display-m {
+  font-family: var(--font-space), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 4.6vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+@utility text-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1.5px currentColor;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-paper);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Custom cursor (hanya aktif di perangkat pointer halus) */
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+html.has-custom-cursor input,
+html.has-custom-cursor textarea,
+html.has-custom-cursor select {
+  cursor: text !important;
+}
+
+/* Aliran data pada garis sirkuit */
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -200;
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes pulse-node {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.animate-dash {
+  animation: dash-flow 6s linear infinite;
+}
+.animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+.animate-spin-slow {
+  animation: spin-slow 60s linear infinite;
+}
+.animate-pulse-node {
+  animation: pulse-node 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
