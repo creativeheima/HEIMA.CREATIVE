@@ -1,70 +1,108 @@
 "use client";
 
+import { motion, useScroll, useTransform, useSpring, useMotionValue, type MotionValue } from "framer-motion";
 import Link from "next/link";
-import { Parallax } from "@/components/motion/Parallax";
+import { useRef } from "react";
 import { Reveal, RevealText } from "@/components/motion/Reveal";
 import { ParallaxImage } from "@/components/ui/BrandImage";
-import { Button } from "@/components/ui/Button";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Project } from "@/content/types";
-import { cn } from "@/lib/motion";
+import { useParallaxIntensity } from "@/hooks/useMotionPrefs";
+import { EASE } from "@/lib/motion";
 
-/** Layout editorial asimetris — posisi tiap item di grid 12 kolom. */
-const LAYOUT = [
-  { wrap: "lg:col-span-8", aspect: "aspect-[16/11]", speed: 0.08 },
-  { wrap: "lg:col-span-4 lg:mt-[28vh]", aspect: "aspect-[4/5]", speed: 0.3 },
-  { wrap: "lg:col-span-7 lg:col-start-1 lg:mt-16", aspect: "aspect-[16/10]", speed: 0.12 },
-  { wrap: "lg:col-span-4 lg:col-start-9 lg:mt-[32vh]", aspect: "aspect-[4/5]", speed: 0.26 },
-];
-
-export function ProjectCard({ project, layoutIndex, headingLevel = "h3" }: { project: Project; layoutIndex: number; headingLevel?: "h2" | "h3" }) {
-  const l = LAYOUT[layoutIndex % LAYOUT.length];
+export function ProjectCard({
+  project,
+  layoutIndex = 0,
+  headingLevel = "h3",
+  progress,
+}: {
+  project: Project;
+  layoutIndex?: number;
+  headingLevel?: "h2" | "h3";
+  progress?: MotionValue<number>;
+}) {
   const Heading = headingLevel;
+  const tags = [project.category, ...(project.services || [])].filter(Boolean).slice(0, 3);
+  const k = useParallaxIntensity();
+
+  // Pergeseran parallax dinamis saat scroll (staggered speed & arah per kolom)
+  const parallaxSpeeds = [
+    [50, -50],
+    [-40, 40],
+    [60, -60],
+    [-35, 35],
+  ];
+  const [startOffset, endOffset] = parallaxSpeeds[layoutIndex % 4];
+
+  const fallbackProgress = useMotionValue(0.5);
+  const activeProgress = progress || fallbackProgress;
+
+  const rawY = useTransform(
+    activeProgress,
+    [0, 1],
+    [startOffset * k, endOffset * k]
+  );
+  const smoothY = useSpring(rawY, { stiffness: 90, damping: 22, mass: 0.5 });
+  const y = progress ? smoothY : undefined;
+
   return (
-    <Parallax speed={l.speed} className={cn("col-span-12", l.wrap)}>
-      <article>
-        <Link
-          href={`/projects/${project.slug}`}
-          data-cursor="view"
-          data-cursor-label="VIEW →"
-          className="group block"
-          aria-label={`${project.title} — lihat detail project`}
-        >
-          <div className="relative">
+    <motion.article
+      initial={{ opacity: 0, y: 35 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.85, ease: EASE, delay: (layoutIndex % 4) * 0.08 }}
+      style={{ y }}
+      className="h-full flex flex-col will-change-transform"
+    >
+      <Link
+        href={`/projects/${project.slug}`}
+        data-cursor="view"
+        data-cursor-label="VIEW →"
+        className="group relative flex flex-1 flex-col justify-between overflow-hidden rounded-3xl border border-navy/10 bg-paper p-5 sm:p-6 shadow-[0_6px_30px_rgba(33,60,109,0.06)] transition-all duration-500 ease-[var(--ease-expo)] hover:-translate-y-2 hover:border-navy/25 hover:shadow-[0_24px_50px_rgba(33,60,109,0.15)]"
+        aria-label={`${project.title} — ${project.client}`}
+      >
+        {/* Bagian Atas: Cover Mockup Square Besar */}
+        <div>
+          <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-mist shadow-inner">
             <ParallaxImage
               src={project.cover}
-              alt={`${project.title} — ${project.category}`}
-              className={cn("w-full", l.aspect)}
-              sizes="(min-width: 1024px) 60vw, 100vw"
+              alt={`${project.title} — ${project.client}`}
+              className="h-full w-full object-cover transition-transform duration-700 ease-[var(--ease-expo)] group-hover:scale-105"
+              sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
               hoverZoom
             />
-            <span className="meta absolute top-5 left-5 rounded-full bg-paper/90 px-3 py-1.5 text-navy backdrop-blur">
-              {project.category}
-            </span>
-            {/* Label hover untuk perangkat tanpa custom cursor */}
-            <span className="meta absolute right-5 bottom-5 flex translate-y-3 items-center gap-2 rounded-full bg-signal px-4 py-2 text-paper opacity-0 transition-all duration-500 ease-[var(--ease-expo)] group-hover:translate-y-0 group-hover:opacity-100">
-              View project →
-            </span>
-          </div>
-          <div className="mt-6 flex items-start justify-between gap-6 border-t border-navy/15 pt-5">
-            <div className="flex gap-5">
-              <span className="meta pt-2 text-signal">{project.number}</span>
-              <div>
-                <Heading className="font-display text-[clamp(1.5rem,2.6vw,2.5rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-navy uppercase transition-colors duration-500 group-hover:text-royal">
-                  {project.title}
-                </Heading>
-                <p className="meta mt-3 text-steel">
-                  {[project.client, project.category, project.year].filter(Boolean).join(" · ")}
-                </p>
-              </div>
+            {/* Badge Kategori */}
+            <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
+              <span className="meta rounded-full bg-paper/95 px-3 py-1 text-[11px] font-bold text-navy shadow-sm backdrop-blur">
+                {project.category}
+              </span>
             </div>
-            <span aria-hidden className="mt-1 text-xl text-navy transition-transform duration-500 group-hover:translate-x-1 group-hover:-rotate-45">
-              →
-            </span>
           </div>
-        </Link>
-      </article>
-    </Parallax>
+
+          {/* Judul & Klien */}
+          <div className="mt-5">
+            <Heading className="font-display text-xl md:text-2xl font-bold uppercase leading-snug tracking-[-0.02em] text-navy transition-colors duration-300 group-hover:text-royal line-clamp-2">
+              {project.title}
+            </Heading>
+            <p className="mt-1.5 text-sm sm:text-base font-medium text-steel">
+              {project.client}
+            </p>
+          </div>
+        </div>
+
+        {/* Bagian Bawah: Tag Pills Kapsul */}
+        <div className="mt-6 pt-2 flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="meta rounded-full border border-navy/12 bg-mist/60 px-3.5 py-1.5 text-xs font-medium text-navy/80 transition-colors group-hover:border-navy/25 group-hover:bg-paper"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </Link>
+    </motion.article>
   );
 }
 
@@ -79,49 +117,65 @@ export function Projects({
   limit?: number;
   showCta?: boolean;
 }) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"],
+  });
+
   const list = limit ? projects.slice(0, limit) : projects;
   return (
-    <section aria-labelledby="projects-title" className="section-y relative overflow-hidden bg-mist">
-      <div className="container-x">
-        <div className="mb-20 grid gap-10 md:mb-28 lg:grid-cols-12">
+    <section
+      ref={sectionRef}
+      aria-labelledby="projects-title"
+      className="section-y relative overflow-hidden bg-mist"
+    >
+      {/* Container Luas (Full Width Spanning) */}
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10">
+        {/* Header Section */}
+        <div className="mb-8 grid gap-6 md:mb-12 lg:grid-cols-12">
           <div className="lg:col-span-3">
             <SectionLabel index={index}>Projects</SectionLabel>
           </div>
-          <div className="flex flex-col gap-8 lg:col-span-9 lg:flex-row lg:items-end lg:justify-between">
+          <div className="flex flex-col gap-6 lg:col-span-9 lg:flex-row lg:items-end lg:justify-between">
             <RevealText
               id="projects-title"
-              className="display-l text-navy"
+              className="display-m font-bold text-navy"
               lines={[
                 "SELECTED",
                 <span key="p">
-                  PROJECTS <sup className="meta align-top text-[0.9rem] text-signal">({String(list.length).padStart(2, "0")})</sup>
+                  PROJECTS <sup className="meta align-top text-[0.875rem] text-signal">({String(list.length).padStart(2, "0")})</sup>
                 </span>,
               ]}
             />
-            <Reveal className="max-w-xs text-steel" delay={0.2}>
+            <Reveal className="max-w-xs text-base text-steel" delay={0.2}>
               Solusi digital yang kami bangun untuk bisnis di berbagai industri.
             </Reveal>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-x-8 gap-y-20 lg:gap-x-12 lg:gap-y-10">
+        {/* 4-Column Card Grid dengan Scroll Parallax Shifting */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 md:gap-6 xl:gap-8 pt-4 pb-10">
           {list.map((p, i) => (
-            <ProjectCard key={p.slug} project={p} layoutIndex={i} />
+            <ProjectCard key={p.slug} project={p} layoutIndex={i} progress={scrollYProgress} />
           ))}
         </div>
 
+        {/* Bottom Link — Open Our Project */}
         {showCta && (
-          <Reveal className="mt-24 flex flex-col items-start justify-between gap-8 border-t border-navy/15 pt-10 md:mt-32 md:flex-row md:items-center">
-            <p className="display-m max-w-xl text-navy">
-              Punya project serupa<span className="text-signal">?</span>
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button href="/projects" variant="outline">
-                All projects
-              </Button>
-              <Button href="/contact">Start a project</Button>
-            </div>
-          </Reveal>
+          <div className="mt-12 flex items-center justify-center md:mt-16">
+            <Reveal delay={0.2}>
+              <Link
+                href="/projects"
+                className="group inline-flex items-center gap-3.5 font-display text-2xl md:text-3xl lg:text-4xl font-bold tracking-[-0.03em] text-navy transition-colors duration-300 hover:text-royal"
+              >
+                <span>Open Our Project</span>
+                <span className="text-signal text-3xl md:text-4xl lg:text-5xl transition-transform duration-300 group-hover:translate-x-3">
+                  →
+                </span>
+              </Link>
+            </Reveal>
+          </div>
         )}
       </div>
     </section>

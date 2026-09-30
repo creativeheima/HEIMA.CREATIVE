@@ -4,7 +4,7 @@ import { getProjectTypes } from "@/content";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Hubungi HEIMA.CREATIVE untuk konsultasi website, aplikasi mobile, custom software, dan sistem informasi. Yogyakarta — Indonesia.",
+  description: "Hubungi HEIMA.CREATIVE untuk konsultasi website, aplikasi mobile, custom software, dan sistem informasi. Magelang — Indonesia.",
   alternates: { canonical: "/contact" },
 };
 

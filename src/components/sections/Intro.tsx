@@ -9,12 +9,12 @@ import { CircuitLines } from "@/components/visuals/Patterns";
 
 export function Intro() {
   return (
-    <section aria-labelledby="intro-title" className="section-y relative overflow-hidden bg-paper">
+    <section aria-labelledby="intro-title" className="pt-24 pb-8 md:pt-32 md:pb-12 relative overflow-hidden bg-paper">
       <Parallax speed={0.3} className="pointer-events-none absolute top-[18%] -right-[10%] h-40 w-[60%] opacity-20">
         <CircuitLines flow={false} mirror />
       </Parallax>
 
-      <div className="container-x relative grid gap-14 lg:grid-cols-12">
+      <div className="container-x relative grid gap-10 lg:grid-cols-12">
         <div className="lg:col-span-3">
           <SectionLabel index="01">Introduction</SectionLabel>
         </div>
@@ -32,7 +32,7 @@ export function Intro() {
             ]}
           />
 
-          <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-9">
+          <div className="mt-8 grid gap-8 md:mt-10 md:grid-cols-9">
             <div className="md:col-span-6">
               <ScrollText
                 className="font-display text-[clamp(1.4rem,2.6vw,2.4rem)] leading-[1.2] font-medium tracking-[-0.02em] text-navy"

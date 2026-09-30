@@ -42,7 +42,7 @@ export function WhyHeima({ values, index = "07" }: { values: Value[]; index?: st
           {values.map((v) => (
             <motion.li
               key={v.number}
-              className="group relative border-t border-navy/15 py-10 md:py-14"
+              className="group relative border-t border-navy/15 py-7 md:py-9"
               initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.55 }}

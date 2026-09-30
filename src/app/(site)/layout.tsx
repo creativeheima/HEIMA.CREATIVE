@@ -20,7 +20,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     description: settings.description,
     email: settings.contact.email,
     telephone: settings.contact.phone,
-    address: { "@type": "PostalAddress", addressLocality: "Yogyakarta", addressCountry: "ID" },
+    address: { "@type": "PostalAddress", addressLocality: "Magelang", addressCountry: "ID" },
     sameAs: settings.socials.map((s) => s.href),
   };
 

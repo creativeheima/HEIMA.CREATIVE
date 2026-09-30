@@ -31,7 +31,7 @@ export const siteSettings = defineType({
       group: "general",
       validation: (r) => r.max(200).warning("Idealnya ≤ 160 karakter untuk mesin pencari."),
     }),
-    defineField({ name: "location", title: "Lokasi", type: "string", group: "general", initialValue: "Yogyakarta — Indonesia" }),
+    defineField({ name: "location", title: "Lokasi", type: "string", group: "general", initialValue: "Magelang — Indonesia" }),
     defineField({
       name: "contact",
       title: "Kontak",

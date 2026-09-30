@@ -18,7 +18,7 @@ export function Clients({ projects, index }: { projects: Project[]; index?: stri
   return (
     <section aria-labelledby="clients-title" className="section-y relative bg-paper">
       <div className="container-x">
-        <div className="mb-16 grid gap-10 md:mb-20 lg:grid-cols-12">
+        <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-12">
           <div className="lg:col-span-3">
             <SectionLabel index={index}>Clients</SectionLabel>
           </div>
@@ -53,7 +53,7 @@ export function Clients({ projects, index }: { projects: Project[]; index?: stri
                 href={`/projects/${p.slug}`}
                 data-cursor="view"
                 data-cursor-label="VIEW →"
-                className="group grid grid-cols-12 items-center gap-4 py-8 md:py-10"
+                className="group grid grid-cols-12 items-center gap-4 py-6 md:py-8"
               >
                 <span className="meta col-span-2 text-steel transition-colors duration-500 group-hover:text-signal md:col-span-1">
                   {String(i + 1).padStart(2, "0")}

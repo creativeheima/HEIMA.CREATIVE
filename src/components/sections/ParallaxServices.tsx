@@ -35,17 +35,17 @@ export function ParallaxServices({ services }: { services: Service[] }) {
   const bgY = useTransform(scrollYProgress, [0, 1], [`${-10 * k}%`, `${10 * k}%`]);
   const bgRotate = useTransform(scrollYProgress, [0, 1], [0, 25 * k]);
   // Middle = medium
-  const midY = useTransform(scrollYProgress, [0, 1], [180 * k, -180 * k]);
+  const midY = useTransform(scrollYProgress, [0, 1], [100 * k, -100 * k]);
   // Foreground = fast
   const fgX = useTransform(scrollYProgress, [0, 1], [`${18 * k}%`, `${-32 * k}%`]);
-  const fgY = useTransform(scrollYProgress, [0, 1], [320 * k, -320 * k]);
+  const fgY = useTransform(scrollYProgress, [0, 1], [140 * k, -140 * k]);
   const fgX2 = useTransform(scrollYProgress, [0, 1], [`${-30 * k}%`, `${14 * k}%`]);
 
   return (
     <section
       ref={ref}
       aria-labelledby="depth-title"
-      className="relative min-h-[140vh] overflow-hidden bg-abyss text-paper md:min-h-[170vh]"
+      className="relative min-h-[100svh] overflow-hidden bg-abyss text-paper"
     >
       {/* BACKGROUND — abstract technology environment */}
       <motion.div aria-hidden className="absolute -inset-[10%]" style={{ y: bgY }}>
@@ -81,7 +81,7 @@ export function ParallaxServices({ services }: { services: Service[] }) {
       {/* FOREGROUND — HEIMA.CREATIVE typography */}
       <motion.div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-[34%] z-10 whitespace-nowrap will-change-transform"
+        className="pointer-events-none absolute inset-x-0 top-[28%] z-10 whitespace-nowrap will-change-transform"
         style={{ y: fgY }}
       >
         <motion.p
@@ -99,7 +99,7 @@ export function ParallaxServices({ services }: { services: Service[] }) {
       </motion.div>
 
       {/* Konten yang dapat dibaca */}
-      <div className="container-x relative z-20 flex min-h-[inherit] flex-col justify-between py-24 md:py-32">
+      <div className="container-x relative z-20 flex min-h-[100svh] flex-col justify-between py-16 md:py-20">
         <SectionLabel index="03" light>
           Eight disciplines · One team
         </SectionLabel>

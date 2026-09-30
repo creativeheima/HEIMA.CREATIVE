@@ -28,12 +28,12 @@ export function BigStatement() {
         <CircuitLines tone="light" />
       </motion.div>
 
-      <div className="container-x relative py-[clamp(8rem,20vw,18rem)]">
-        <p className="meta mb-12 flex items-center gap-3 text-paper/60">
+      <div className="container-x relative py-16 md:py-24">
+        <p className="meta mb-6 flex items-center gap-3 text-paper/60 md:mb-8">
           <span className="h-px w-10 bg-signal" aria-hidden />
           Our belief
         </p>
-        <h2 id="statement-title" className="font-display text-[clamp(3rem,11vw,12rem)] leading-[0.86] font-bold tracking-[-0.055em] uppercase">
+        <h2 id="statement-title" className="font-display text-[clamp(2.75rem,8vw,8rem)] leading-[0.9] font-bold tracking-[-0.045em] uppercase">
           <StatementLine progress={scrollYProgress} range={[0.15, 0.4]} shift={-6 * k}>
             Technology
           </StatementLine>

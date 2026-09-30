@@ -35,7 +35,7 @@ export function ServicesList({ services, index = "02", showHeader = true }: { se
     <section aria-labelledby="services-title" className="section-y relative bg-paper">
       <div className="container-x">
         {showHeader && (
-          <div className="mb-16 grid gap-10 md:mb-24 lg:grid-cols-12">
+          <div className="mb-10 grid gap-8 md:mb-14 lg:grid-cols-12">
             <div className="lg:col-span-3">
               <SectionLabel index={index}>Services</SectionLabel>
             </div>

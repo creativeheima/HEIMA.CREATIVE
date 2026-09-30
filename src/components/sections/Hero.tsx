@@ -152,7 +152,7 @@ export function Hero() {
               transition={{ duration: 1, ease: EASE, delay: 0.5 }}
             >
               <span className="h-px w-10 bg-signal" aria-hidden />
-              {site.tagline} — Est. Yogyakarta
+              {site.tagline} — Est. Magelang
             </motion.p>
             <RevealText
               as="h1"

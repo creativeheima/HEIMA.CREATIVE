@@ -16,7 +16,7 @@ import { photos } from "@/lib/images";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "HEIMA.CREATIVE adalah perusahaan IT di Yogyakarta yang menggabungkan teknologi, design, dan pemahaman bisnis untuk membangun solusi digital berdampak nyata.",
+    "HEIMA.CREATIVE adalah perusahaan IT di Magelang yang menggabungkan teknologi, design, dan pemahaman bisnis untuk membangun solusi digital berdampak nyata.",
   alternates: { canonical: "/about" },
 };
 

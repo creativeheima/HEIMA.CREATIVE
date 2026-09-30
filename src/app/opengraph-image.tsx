@@ -41,7 +41,7 @@ export default async function OpengraphImage() {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, letterSpacing: 4, color: "#6B7385" }}>
           <span>IT &amp; DIGITAL SOLUTIONS</span>
-          <span>YOGYAKARTA — INDONESIA</span>
+          <span>MAGELANG — INDONESIA</span>
         </div>
       </div>
     ),

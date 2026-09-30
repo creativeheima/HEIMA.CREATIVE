@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     applicationName: siteConfig.name,
     keywords: [
-      "perusahaan IT Yogyakarta",
+      "perusahaan IT Magelang",
       "jasa pembuatan website",
       "jasa pembuatan aplikasi",
       "custom software",

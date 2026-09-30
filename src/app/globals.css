@@ -39,7 +39,7 @@
 }
 
 @utility section-y {
-  padding-block: clamp(6rem, 14vw, 13rem);
+  padding-block: clamp(3.5rem, 6vw, 6rem);
 }
 
 @utility meta {

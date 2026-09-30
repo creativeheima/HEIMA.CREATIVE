@@ -36,7 +36,7 @@ export function TechMarquee({
   return (
     <section ref={ref} aria-labelledby="tech-title" className="section-y relative overflow-hidden bg-paper">
       {showHeader && (
-        <div className="container-x mb-16 grid gap-10 md:mb-24 lg:grid-cols-12">
+        <div className="container-x mb-10 grid gap-8 md:mb-14 lg:grid-cols-12">
           <div className="lg:col-span-3">
             <SectionLabel index={index}>Technology</SectionLabel>
           </div>

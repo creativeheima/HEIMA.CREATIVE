@@ -25,15 +25,15 @@ export const navigation = [
 export const fallbackSettings: SiteSettings = {
   tagline: "IT & Digital Solutions",
   description:
-    "HEIMA.CREATIVE adalah perusahaan IT di Yogyakarta yang membangun website, aplikasi mobile, custom software, dan sistem informasi untuk membantu bisnis bergerak maju.",
-  location: "Yogyakarta — Indonesia",
+    "HEIMA.CREATIVE adalah perusahaan IT di Magelang yang membangun website, aplikasi mobile, custom software, dan sistem informasi untuk membantu bisnis bergerak maju.",
+  location: "Magelang — Indonesia",
   contact: {
     email: "hello@heimacreative.com",
     phone: "+62 812 0000 0000",
     phoneHref: "tel:+6281200000000",
     whatsapp: "+62 812 0000 0000",
     whatsappHref: "https://wa.me/6281200000000",
-    address: "Jl. Contoh No. 00, Sleman, Daerah Istimewa Yogyakarta 55281",
+    address: "Magelang, Jawa Tengah, Indonesia",
     hours: "Senin — Jumat, 09.00 — 18.00 WIB",
   },
   socials: [
